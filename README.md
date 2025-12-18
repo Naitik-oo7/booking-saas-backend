@@ -1,107 +1,321 @@
-# Node.js Express TypeScript Boilerplate
+Yes — **everything you just asked about (roles, who logs in where, multi-business, admin vs owner vs staff vs customer)** **IS already part of the project scope and mental model** we defined. Nothing new or accidental was added. This is **exactly** the real-world usage this system is meant for.
 
-A production-ready boilerplate for building REST APIs with Node.js, Express, and TypeScript.
+Below is a **clean, professional README.md** you can **directly copy-paste** into your repo **or into a new ChatGPT Project**.
+It explains the product, roles, real usage, and scope clearly — the way recruiters, clients, and future-you will understand it.
 
-## Features
+---
 
-- 🚀 **Express.js** - Fast, unopinionated web framework for Node.js
-- 🎯 **TypeScript** - Strongly typed programming language that builds on JavaScript
-- 🗄️ **Sequelize ORM** - Modern TypeScript ORM for Node.js
-- 🔐 **Zod Validation** - TypeScript-first schema declaration and validation library
-- ⚡ **PostgreSQL** - Powerful, open source object-relational database system
-- 🛡️ **Security** - Helmet, CORS, and rate limiting
-- 📝 **Logging** - Structured logging with Morgan
-- 🧪 **Testing** - Jest for unit and integration testing
-- 📦 **Dependency Injection** - InversifyJS for IoC
-- 🐳 **Docker Support** - Containerize your application with ease
-- 🔄 **Hot Reload** - Automatic restarts during development
+# 📘 Booking & Management SaaS
 
-## Prerequisites
+**Business-Agnostic | Backend-First | Full-Stack Later**
 
-- Node.js >= 16.x
-- PostgreSQL >= 12.x
-- npm/yarn/pnpm
+---
 
-## Getting Started
+## 🧠 What is this project?
 
-### Installation
+This project is a **multi-tenant booking & management SaaS backend** that allows businesses to sell **time-based services** (appointments, sessions, classes) safely with:
 
-1. Clone the repository:
+- role-based access control
+- availability rules
+- transaction-safe bookings
+- payment reconciliation
+- background notifications
 
-   ```bash
-   git clone <repository-url>
-   cd node-express-ts-starter
-   ```
+It is designed to be:
 
-2. Install dependencies:
+- **portfolio-grade**
+- **freelance-ready**
+- **remote-job friendly**
+- **logic & system-design heavy**
 
-   ```bash
-   npm install
-   ```
+---
 
-3. Set up environment variables:
+## 🎯 Why this project exists
 
-   ```bash
-   cp .env.example .env
-   # Edit .env with your configuration
-   ```
+Many service businesses struggle with:
 
-4. Run the development server:
-   ```bash
-   npm run dev
-   ```
+- double bookings
+- manual scheduling
+- payment mismatches
+- staff coordination issues
+- lack of a single source of truth
 
-### Available Scripts
+This system solves that by acting as a:
 
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Compile TypeScript to JavaScript
-- `npm start` - Start production server
-- `npm test` - Run tests
-- `npm run test:watch` - Run tests in watch mode
+> **Time-as-Inventory Engine**
 
-## Project Structure
+Where:
+
+- **Availability** = possible time
+- **Booking** = sold time
+- **Backend** = source of truth
+
+---
+
+## 👥 Roles & Real-World Usage
+
+This system has **four clearly separated roles**.
+
+---
+
+### 1️⃣ Customer (Public User)
+
+**Who is this?**
+
+- Someone booking a service
+  (doctor appointment, salon visit, coaching session, gym class)
+
+**How they use the system**
+
+- Visit a public booking page (no dashboard login required)
+- Select service, date, and time
+- Pay (if required)
+- Receive confirmation
+- Cancel or reschedule (within allowed rules)
+
+**What customers can do**
+
+- Book services
+- Pay for bookings
+- View / cancel their own bookings
+
+**What customers cannot do**
+
+- See other bookings
+- Access business dashboards
+- Manage services or staff
+
+---
+
+### 2️⃣ Business Owner (Main Paying User)
+
+**Who is this?**
+
+- Clinic owner
+- Salon owner
+- Coach / gym owner
+- Any service business owner
+
+**Where do they log in?**
 
 ```
-src/
-├── config/          # Configuration files
-├── middlewares/     # Express middlewares
-├── models/          # Database models
-├── modules/         # Feature modules
-│   └── users/       # Example user module
-├── routes/          # Route definitions
-├── types/           # TypeScript types
-├── utils/           # Utility functions
-├── app.ts           # Express app configuration
-└── server.ts        # Server entry point
+/login → Business Dashboard
 ```
 
-## Environment Variables
+**What business owners can do**
 
-See `.env.example` for required environment variables.
+- Create and manage their business
+- Define services (price, duration)
+- Add and manage staff
+- Set availability rules
+- View all bookings
+- View payments & revenue
+- Cancel bookings if required
 
-## API Endpoints
+**What they cannot do**
 
-### Users
+- Access other businesses
+- Change platform-level settings
 
-- `GET /api/v1/users` - Get all users
-- `POST /api/v1/users` - Create a new user
+---
 
-## Error Handling
+### 3️⃣ Staff (Service Providers)
 
-The application uses a centralized error handling mechanism with custom error codes and HTTP status codes.
+**Who is this?**
 
-## Validation
+- Doctor
+- Stylist
+- Trainer
+- Coach
 
-Request validation is performed using Zod schemas defined in each module.
+**Where do they log in?**
 
-## Contributing
+```
+/login → Staff Dashboard
+```
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a pull request
+**What staff can do**
 
-## License
+- View their own bookings
+- See schedule (date & time)
+- Mark bookings as completed (optional)
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+**What staff cannot do**
+
+- Manage services or pricing
+- View other staff bookings
+- Access payments or revenue
+- Change business settings
+
+---
+
+### 4️⃣ Platform Admin (SaaS Owner)
+
+**Who is this?**
+
+- You (the platform owner)
+
+**Purpose**
+
+- Manage the SaaS itself, not a business
+
+**What admin can do**
+
+- View all businesses
+- Suspend / activate businesses
+- View platform-level metrics
+- Handle disputes if needed
+
+> Admin ≠ Business Owner
+> Admin runs the platform, owners run businesses.
+
+Admin panel in V1 is **minimal** (protected routes, basic UI or Postman).
+
+---
+
+## 🏢 Multi-Business (Multi-Tenant)
+
+Yes — this system supports **multiple businesses** in a single backend.
+
+- One database
+- Many businesses
+- Strict isolation using `businessId`
+
+Example:
+
+```
+Elite Salon → businessId = 1
+City Clinic → businessId = 2
+```
+
+Data **never leaks** across businesses.
+
+---
+
+## 🧩 Core Features (V1 Scope)
+
+### Authentication & Authorization
+
+- JWT-based auth
+- Role-based access control
+
+### Business Management
+
+- Create & manage businesses
+- Business isolation
+
+### Services
+
+- Define services (duration, price)
+- Enable / disable services
+
+### Staff Management
+
+- Add staff
+- Assign services to staff
+
+### Availability Rules
+
+- Weekly recurring availability
+- Business-wide or staff-specific
+
+### Booking Engine (Core)
+
+- Slot calculation
+- Re-validation on booking
+- No double booking
+- Booking state machine:
+
+  ```
+  PENDING → CONFIRMED → COMPLETED
+             ↓
+          CANCELLED
+  ```
+
+### Payments
+
+- Payment intent creation
+- Webhook handling
+- Booking ↔ payment reconciliation
+
+### Notifications (Async)
+
+- Confirmation emails
+- Cancellation messages
+- Reminders via background jobs
+
+---
+
+## 🗂️ Core Database Tables
+
+- `users`
+- `businesses`
+- `business_members`
+- `services`
+- `staff_services`
+- `availability_rules`
+- `bookings` (source of truth)
+- `payments`
+- `notifications`
+
+---
+
+## 🔒 Non-Negotiable Rules (Invariants)
+
+- No overlapping bookings for the same staff
+- Booking must fall within availability
+- Payment success ≠ booking success
+- Business data must be isolated
+- Staff can only see their own bookings
+- Booking state transitions must be valid
+
+---
+
+## 🧠 Why this project is portfolio-worthy
+
+This project demonstrates:
+
+- real system design
+- concurrency handling
+- transaction safety
+- payment reconciliation
+- RBAC & multi-tenancy
+- backend ownership
+
+It is **not a CRUD app**.
+It is a **business rules engine**.
+
+---
+
+## 🚀 Career Impact
+
+- **Freelancing**: reusable booking system for real clients
+- **Remote jobs**: strong backend discussion points
+- **Confidence**: ability to reason about failures & edge cases
+
+---
+
+## 🛠️ Tech Stack
+
+**Backend**
+
+- Node.js
+- TypeScript
+- Express
+- PostgreSQL
+- Sequelize (migrations)
+- Redis + BullMQ
+- JWT
+- Zod
+
+**Frontend (later)**
+
+- React
+- Tailwind CSS
+
+---
+
+## 📌 Status
+
+This is a **long-term, single flagship project**.
+No scope hopping. No shallow features.
