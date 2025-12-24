@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register } from "./auth.controller";
+import { login, signup } from "./auth.controller";
 import { asyncWrapper } from "../../utils/asyncWrapper";
 import { validate } from "../../middlewares/validation";
 import { z } from "zod";
@@ -18,7 +18,7 @@ const loginSchema = z.object({
   password: z.string().min(6),
 });
 
-router.post("/register", validate(registerSchema), asyncWrapper(register));
+router.post("/signup", validate(registerSchema), asyncWrapper(signup));
 router.post("/login", validate(loginSchema), asyncWrapper(login));
 
 export default router;

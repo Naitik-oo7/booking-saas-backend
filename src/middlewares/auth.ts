@@ -1,29 +1,37 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import { AppError } from "utils/AppError";
+import { verifyAccessToken } from "../utils/jwt";
+import User from "../modules/users/user.model";
 
-interface JwtPayload {
-  userId: number;
-}
-
-export function requireAuth(req: Request, res: Response, next: NextFunction) {
+export async function authMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    throw new AppError("Not authenticated", 401, "NOT_AUTHENTICATED");
+    res.status(401).json({ message: "Unauthorized" });
+    return;
   }
 
   const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET as string
-    ) as JwtPayload;
+    const payload = verifyAccessToken(token);
 
-    req.user = { id: decoded.userId };
+    const user = await User.findByPk(payload.userId);
+
+    if (!user || user.status !== "active") {
+      res.status(401).json({ message: "User inactive" });
+      return;
+    }
+
+    // attach identity
+    (req as any).user = user;
+
     next();
   } catch {
-    throw new AppError("Invalid or expired token", 401, "INVALID_TOKEN");
+    res.status(401).json({ message: "Invalid token" });
+    return;
   }
 }

@@ -1,6 +1,6 @@
 import app from "./app";
 import config from "./config/env";
-import sequelize from "./config/db";
+import { sequelize, syncModels } from "./models";
 import logger from "./utils/logger";
 
 async function startServer() {
@@ -8,7 +8,7 @@ async function startServer() {
     await sequelize.authenticate();
     logger.log("✅ Database connected");
 
-    await sequelize.sync({ alter: true });
+    await syncModels();
     logger.log("✅ Database synced");
 
     const server = app.listen(config.port, () => {
