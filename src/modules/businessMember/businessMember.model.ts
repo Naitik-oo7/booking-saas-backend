@@ -65,7 +65,7 @@ BusinessMember.init(
     indexes: [
       {
         unique: true,
-        fields: ["userId", "businessId"],
+        fields: ["user_id", "business_id"],
       },
     ],
   }

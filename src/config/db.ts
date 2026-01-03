@@ -3,7 +3,7 @@ import config from "./env";
 
 const sequelize = new Sequelize(config.database.url, {
   dialect: "postgres",
-  logging: config.env === "development" ? console.log : false,
+  logging:false,
   pool: {
     max: 5,
     min: 0,

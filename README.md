@@ -319,3 +319,11 @@ It is a **business rules engine**.
 
 This is a **long-term, single flagship project**.
 No scope hopping. No shallow features.
+
+## Technical Notes
+
+- `express.json()` and `express.urlencoded({ extended: true })` are used to parse incoming request bodies.
+  - `express.json()` handles JSON payloads (from APIs or frontend apps).
+  - `express.urlencoded()` handles HTML form submissions and nested objects.
+- Async functions (`async`/`await`) are used in controllers to handle asynchronous operations like database calls, ensuring responses are only sent after operations finish and avoiding race conditions.
+- Helmet (`app.use(helmet())`) is used to secure HTTP headers, preventing common vulnerabilities like clickjacking and content sniffing.

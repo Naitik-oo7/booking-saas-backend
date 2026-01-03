@@ -15,7 +15,9 @@ export default function errorHandler(
   res: Response,
   next: NextFunction
 ) {
+if (process.env.NODE_ENV !== "production") {
   console.error(err);
+}
 
   if (err instanceof ZodError) {
     return res.status(400).json({

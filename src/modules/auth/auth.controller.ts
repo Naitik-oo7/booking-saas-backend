@@ -4,6 +4,7 @@ import User from "../users/user.model";
 import { signAccessToken } from "../../utils/jwt";
 import { AppError } from "../../utils/AppError";
 
+// Use async to handle DB operations properly and avoid race conditions
 export async function signup(req: Request, res: Response): Promise<void> {
   const { email, password, firstName, lastName } = req.body;
 

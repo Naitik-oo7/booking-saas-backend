@@ -6,7 +6,7 @@ import {
 } from "./businessMember.controller";
 import { authMiddleware } from "../../middlewares/auth";
 import { businessContextMiddleware } from "../../middlewares/business.middleware";
-import { requireOwner } from "../../middlewares/role.guard";
+import { requireRoles } from "../../middlewares/role.guard";
 
 import { asyncWrapper } from "../../utils/asyncWrapper";
 
@@ -25,7 +25,7 @@ router.patch(
   "/:memberId",
   authMiddleware,
   businessContextMiddleware,
-  requireOwner,
+  requireRoles(["owner"]),
   asyncWrapper(updateBusinessMemberRole)
 );
 
@@ -34,7 +34,7 @@ router.delete(
   "/:memberId",
   authMiddleware,
   businessContextMiddleware,
-  requireOwner,
+  requireRoles(["owner"]),
   asyncWrapper(removeBusinessMember)
 );
 

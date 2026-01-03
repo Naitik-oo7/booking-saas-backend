@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { createBusiness, addStaff } from "./business.controller";
 import { businessContextMiddleware } from "../../middlewares/business.middleware";
-import { requireOwner } from "../../middlewares/role.guard";
+import { requireRoles } from "../../middlewares/role.guard";
 import { validate } from "../../middlewares/validation";
 import { createBusinessSchema, addStaffSchema } from "./business.validation";
 import { asyncWrapper } from "../../utils/asyncWrapper";
@@ -20,7 +20,7 @@ router.post(
   "/add",
   authMiddleware,
   businessContextMiddleware,
-  requireOwner,
+  requireRoles(["owner"]),
   validate(addStaffSchema),
   asyncWrapper(addStaff)
 );
